@@ -9,6 +9,6 @@ then
     kill "$SVRD"
     exit 0
 else
-    kill $SVRD
+    kill "$SVRD"
     exit "$RETURN_STATUS"
 fi
