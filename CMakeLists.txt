@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.1)
 project( svr )
 
-# Global Configuration
+## Global Configuration
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
   set( CMAKE_C_FLAGS "-D__SVR_Linux__" )
 elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
@@ -9,12 +9,13 @@ elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
 endif()
 enable_testing()
 
-# Subdirectories to be built
+## Subdirectories to be built
 add_subdirectory( lib )
 add_subdirectory( server )
 add_subdirectory( python )
 add_subdirectory( util )
 
+## Uninstall
 # Add uninstall target, taken from the cmake wiki:
 # https://cmake.org/Wiki/CMake_FAQ#Can_I_do_.22make_uninstall.22_with_CMake.3F
 if(NOT TARGET uninstall)
@@ -27,11 +28,17 @@ if(NOT TARGET uninstall)
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
 
+## Documentation
 # The documentation target, which expects to be built from the toplevel dir
 add_custom_target(doc COMMAND doxygen ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile)
 
-# Tests
+## Tests
 
 # This test just checks whether svrctl can open v4l
 add_test( NAME sanity_check
   COMMAND bash test.sh ${CMAKE_CURRENT_SOURCE_DIR} )
+
+# This test will only pass if both an avi file is recorded
+# and ffmpeg confirms it is free of errors.
+add_test( NAME record_file
+  COMMAND bash vidfiletest.sh ${CMAKE_CURRENT_SOURCE_DIR} )
