@@ -7,13 +7,13 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_C_FLAGS "-D__SW_Darwin__" )
 endif()
+enable_testing()
 
 # Subdirectories to be built
 add_subdirectory( lib )
 add_subdirectory( server )
 add_subdirectory( python )
 add_subdirectory( util )
-add_subdirectory( test )
 
 # Add uninstall target, taken from the cmake wiki:
 # https://cmake.org/Wiki/CMake_FAQ#Can_I_do_.22make_uninstall.22_with_CMake.3F
@@ -27,5 +27,11 @@ if(NOT TARGET uninstall)
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
 
-# Finally the documentation target, which expects to be built from the toplevel dir
+# The documentation target, which expects to be built from the toplevel dir
 add_custom_target(doc COMMAND doxygen ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile)
+
+# Tests
+
+# This test just checks whether svrctl can open v4l
+add_test( NAME sanity_check
+  COMMAND bash test.sh ${CMAKE_CURRENT_SOURCE_DIR} )
