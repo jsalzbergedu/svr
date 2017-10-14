@@ -8,12 +8,15 @@ elseif( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_C_FLAGS "-D__SW_Darwin__" )
 endif()
 enable_testing()
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+set(TOPLEVEL_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 ## Subdirectories to be built
 add_subdirectory( lib )
 add_subdirectory( server )
 add_subdirectory( python )
 add_subdirectory( util )
+add_subdirectory( tests )
 
 ## Uninstall
 # Add uninstall target, taken from the cmake wiki:
@@ -31,14 +34,3 @@ endif()
 ## Documentation
 # The documentation target, which expects to be built from the toplevel dir
 add_custom_target(doc COMMAND doxygen ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile)
-
-## Tests
-
-# This test just checks whether svrctl can open v4l
-add_test( NAME sanity_check
-  COMMAND bash test.sh ${CMAKE_CURRENT_SOURCE_DIR} )
-
-# This test will only pass if both an avi file is recorded
-# and ffmpeg confirms it is free of errors.
-add_test( NAME record_file
-  COMMAND bash vidfiletest.sh ${CMAKE_CURRENT_SOURCE_DIR} )
