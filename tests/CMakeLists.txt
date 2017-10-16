@@ -6,6 +6,8 @@ find_package(PythonInterp REQUIRED)
 set(Python_ADDITIONAL_VERSIONS $(PYTHON_VERSION_STRING))
 find_program(PYTHON "python")
 
+add_subdirectory( libtests )
+
 # This test just checks whether svrctl can open v4l
 add_test( NAME sanity_check
   COMMAND ${PYTHON}
