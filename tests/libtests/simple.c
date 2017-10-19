@@ -16,7 +16,7 @@ int main(void) {
   stream = SVR_Stream_new("forward");
   if (!stream) {
     printf("Stream forward not initialized. \n");
-    return EXIT_FAILURE;
+    exit(EXIT_FAILURE);
   } else {
     /* Here we set the encoding of the stream to "raw" */
     SVR_Stream_setEncoding(stream, "raw");
