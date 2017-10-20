@@ -9,6 +9,8 @@ find_program(PYTHON "python")
 add_subdirectory( libtests )
 
 # This test just checks whether svrctl can open v4l
+# if you are confused by the syntax of the command,
+# see start-svrd-continuation.py
 add_test( NAME sanity_check
   COMMAND ${PYTHON}
   ${CMAKE_CURRENT_SOURCE_DIR}/start-svrd-continuation.py
