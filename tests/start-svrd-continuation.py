@@ -3,7 +3,8 @@
 ## Commentary:
 # What this command does is simple but obfuscated by the syntax.
 # If you know lisp, its a lot like continuation passing style.
-# If you don't know lisp, no worries.
+# If you don't know lisp, this function is a lot like a function that takes a callback.
+# If you don't know about either, no worries.
 # A continuation is a thing that represents control of the program.
 # A continuation can be passed as an argument to a function or used as the return value of a function.
 # While the definition itself sounds like gobbldygook, it is easy to read and write examples
@@ -90,7 +91,8 @@
 #
 # Oh noes! Now svrd-stream-reader can't exit before svrd! `execute the process;` won't get
 # called until `svrd -d | svrd-stream-reader;` returns.
-# So now we have a problem: in super-procedural bash, we want to go to the next instruction...
+# So now we have a problem: in super-procedural bash, which is evaluated instruction-by-instruction,
+# we want to go to the next instruction...
 # before the next instruction is available. This is where the continuation comes in:
 #
 # svrd -d | svrd-stream-reader-takes-continuation continuation;
@@ -139,3 +141,8 @@ while True:
         svrd.kill()
         # and finally return with exit_status.
         exit(exit_status)
+
+
+
+
+

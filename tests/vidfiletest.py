@@ -47,6 +47,7 @@ def record_frame(stream_name, stream, out, filename):
         print "Stream Closed:", stream_name
         
     if frame:
+        cv.ShowImage(stream_name, frame)
         if out.isOpened():
             raw_frame = cv_to_cv2(frame)
             out.write(raw_frame)
