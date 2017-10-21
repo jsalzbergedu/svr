@@ -2,7 +2,7 @@
 
 ## Commentary:
 # What this command does is simple but obfuscated by the syntax.
-# If you know lisp, its a lot like a continuation.
+# If you know lisp, its a lot like continuation passing style.
 # If you don't know lisp, no worries.
 # A continuation is a thing that represents control of the program.
 # A continuation can be passed as an argument to a function or used as the return value of a function.
@@ -31,28 +31,41 @@
 # Note that 2 + 2 is evaluated before 4 + 4. A continuation results in the order being turned inside out:
 # while normally the innermost function is executed first, when a function is taking a continuation it
 # executes before what comes inside of it. This is because you are not passing do-stuff-with-x(4) to
-# to takes-continuation, but instead _control_ of the program is passed from takes_continuation:
+# to takes-continuation, but instead _control_ of the program is passed from
+# takes_continuation to do-stuff-with-x. This can be illustrated with a working python example:
 #
 # def takes_continuation(n, k): # where k is an abbreviation for continuation
 #     # Calls continuation k on the result of adding n and 6
 #     y = n + 6
 #     return k(y)
 #
-# def recieves_control_state(n)
+# def receives_control_state(n): # floors x at 7
 #     if n > 7:
 #         return n
 #     else:
-#         8
+#         return 8
+#
+# def also_receives_control_state(n): # caps x at 7
+#     if n < 7:
+#         return n
+#     else:
+#         return 6
 #
 # Now at the prompt:
 # 
-# >>> x = takes_continuation(10, recieves_control_state)
+# >>> x = takes_continuation(10, receives_control_state)
 # >>> x
 # 16
+# >>> x = takes_continuation(10, also_receives_control_state)
+# >>> x
+# 6
 #    
 # As you can see, receives_control_state is explicitly next in line in the control flow of
-# the program: after the calculation, n +6, is done by `takes_continuation`, k, or in
+# the program: after the calculation, n + 6, is done by `takes_continuation`, k, or in
 # this case, receives_control_state, gets the control, as it gets to decide where the program will go.
+# Similarly, when also_receives_control_state is passed to `takes_continuation` as an argument,
+# it also receives the control flow.
+# In other words, the _control flow_ of the program becomes an _explicit, modifiable parameter_.
 #
 # So now you may be saying to yourself, "Ok, continuations are cool and all, but how is this relevant?"
 # Hold on, dear reader. To answer that question, we need more examples and explanation (yay).
@@ -86,7 +99,7 @@
 # the function "continuation", and return what the function "continuation" returns.
 # Which is exactly what this script does. Of course, calling it looks a little different from
 #
-# svrd -d | svrd-stream-reader;
+# svrd -d | svrd-stream-reader-takes-continuation continuation;
 #
 # It looks a lot more like
 #
@@ -94,7 +107,9 @@
 #
 # where continuation is a program and its args, such as
 #
-# bash normalscript.sh
+#   program                   args
+#    /--\       /-------------------------------\
+#    bash       normalscript.sh --option argument
 #
 # or
 #
