@@ -5,4 +5,4 @@ set(Python_ADDITIONAL_VERSIONS $(PYTHON_VERSION_STRING))
 find_program(PYTHON "python")
 add_custom_target(python ALL
   COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/buildscript.sh ${CMAKE_CURRENT_SOURCE_DIR} ${PYTHON} build )
-install(CODE "execute_process( COMMAND bash \"${CMAKE_CURRENT_SOURCE_DIR}/buildscript.sh\" \"${CMAKE_CURRENT_SOURCE_DIR}\" ${PYTHON} install )" )
+install(CODE "execute_process( COMMAND bash \"${CMAKE_CURRENT_SOURCE_DIR}\"/buildscript.sh \"${CMAKE_CURRENT_SOURCE_DIR}\" ${PYTHON} install )" )
