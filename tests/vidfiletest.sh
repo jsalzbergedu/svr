@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## Resetting the testfile.avi
+rm "$1"/tests/testfile.avi
+
 ## Getting the testfile.avi 
 "$1"/util/svrctl -o forward,v4l:dev=/dev/video0
 python "$1"/tests/vidfiletest.py
