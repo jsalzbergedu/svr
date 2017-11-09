@@ -19,6 +19,7 @@ add_test( NAME sanity_check
   ${CMAKE_CURRENT_SOURCE_DIR}/test.sh
   ${TOPLEVEL_DIR} )
 
+
 # This test will only pass if both an avi file is recorded
 # and ffmpeg confirms it is free of errors.
 add_test( NAME record_file

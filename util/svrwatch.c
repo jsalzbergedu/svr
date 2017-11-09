@@ -215,7 +215,7 @@ int main(int argc, char** argv) {
 
     printf("Press 'q' to quit.\n");
 
-    while(cvWaitKey(10) != 'q' && (stream_count > 0 || watch_all)) {
+    while((cvWaitKey(10) & 0xFF) != 'q' && (stream_count > 0 || watch_all)) {
         pthread_mutex_lock(&list_stale_lock);
         if(list_stale) {
             list_stale = false;
