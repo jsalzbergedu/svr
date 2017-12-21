@@ -1,0 +1,37 @@
+pkgname=svr-pylib
+pkgver=1
+pkgrel=1
+depends=('libseawolf')
+arch=('i686' 'x86_64')
+url="http://www.ncsurobotics.com/"
+
+# No agreed upon license afaik, but for all intents and purposes open source
+# ¯\_(ツ)_/¯
+license=('APACHE')
+
+pkgdesc='Seawolf video router'
+source=('git+https://github.com/jsalzbergedu/svr.git#branch=packaging')
+depends=('svr')
+makedepends=('git' 'cmake' 'ninja' 'python2' 'swig')
+md5sums=('SKIP')
+
+build() {
+    pushd svr
+    mkdir build
+    pushd build
+    cmake .. -GNinja 
+    ninja
+    popd # To get back to svr dir
+    pushd python
+    python2 setup.py build
+    popd
+    popd
+}
+
+package() {
+    pushd svr
+    pushd python
+    python2 setup.py install --root="$pkgdir/" --optimize=1
+    popd
+    popd
+}

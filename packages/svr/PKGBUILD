@@ -1,0 +1,30 @@
+# Maintainer: Jacob Salzberg <jssalzbe@ncsu.edu>
+pkgname=svr
+pkgver=1
+pkgrel=1
+arch=('i686' 'x86_64')
+url="http://www.ncsurobotics.com/"
+
+# No agreed upon license afaik, but for all intents and purposes open source
+# ¯\_(ツ)_/¯
+license=('APACHE')
+
+pkgdesc='Seawolf video router'
+source=('git+https://github.com/jsalzbergedu/svr.git#branch=packaging')
+depends=('libseawolf' 'swpycv' 'opencv2')
+makedepends=('git' 'cmake' 'ninja' 'python2')
+md5sums=('SKIP')
+
+build() {
+    pushd svr
+    mkdir build
+    pushd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr .. -GNinja
+    ninja
+    popd
+    popd
+}
+
+package() {
+    DESTDIR="$pkgdir/" ninja -C "svr/build/" install
+}
