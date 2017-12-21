@@ -12,11 +12,11 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 set(TOPLEVEL_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 ## Subdirectories to be built
-add_subdirectory( lib )
-add_subdirectory( server )
-add_subdirectory( python )
-add_subdirectory( util )
-add_subdirectory( tests )
+add_subdirectory(lib)
+add_subdirectory(server)
+add_subdirectory(python)
+add_subdirectory(util)
+add_subdirectory(tests)
 
 ## Uninstall
 # Add uninstall target, taken from the cmake wiki:
@@ -30,6 +30,18 @@ if(NOT TARGET uninstall)
     add_custom_target(uninstall
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
+
+
+set(HEADER_FILES
+blockalloc.h comm.h encoding.h errors.h forward.h frameproperties.h lockable.h logging.h mempool.h message.h messagehandlers.h messagerouting.h net.h optionstring.h pack.h refcount.h responseset.h source.h stream.h svrcv.h)
+
+foreach(FILE ${HEADER_FILES})
+  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/svr/${FILE}
+    DESTINATION include/svr)
+endforeach()
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/svr.h
+  DESTINATION include)
 
 ## Documentation
 # The documentation target, which expects to be built from the toplevel dir
