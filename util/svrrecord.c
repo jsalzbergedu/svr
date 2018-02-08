@@ -1,5 +1,5 @@
 #include <svr.h>
-#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/highgui/highgui_c.h"
 #define XVID_FOURCC 1145656920
 
 int main(void) {

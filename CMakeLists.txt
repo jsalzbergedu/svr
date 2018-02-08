@@ -1,6 +1,17 @@
 cmake_minimum_required (VERSION 3.1)
 project( svr )
 
+
+## CPack packages
+
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 1)
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Seawolf video router")
+set(CPACK_PACKAGE_CONTACT "ncsurobotics@ncsurobotics.com")
+
+include(CPack) # This line must go after where the variables are set
+
 ## Global Configuration
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
   set( CMAKE_C_FLAGS "-D__SVR_Linux__" )
